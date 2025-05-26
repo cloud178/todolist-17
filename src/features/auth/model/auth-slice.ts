@@ -4,6 +4,8 @@ import { authApi } from "@/features/auth/api/authApi.ts"
 import { AUTH_TOKEN } from "@/common/constants"
 import { ResultCode } from "@/common/enums"
 import { setAppStatusAC } from "@/app/app-slice.ts"
+import { clearTasksAC } from "@/features/todolists/model/tasks-slice.ts"
+import { clearTodolistsAC } from "@/features/todolists/model/todolists-slice.ts"
 
 export const authSlice = createAppSlice({
   name: "auth",
@@ -46,6 +48,8 @@ export const authSlice = createAppSlice({
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: "succeeded" }))
             localStorage.removeItem(AUTH_TOKEN)
+            dispatch(clearTasksAC())
+            dispatch(clearTodolistsAC())
             return { isLoggedIn: false }
           } else {
             handleServerAppError(res.data, dispatch)
@@ -65,6 +69,7 @@ export const authSlice = createAppSlice({
     meTC: create.asyncThunk(
       async (_, { dispatch, rejectWithValue }) => {
         try {
+          debugger
           const res = await authApi.me()
           if (res.data.resultCode === ResultCode.Success) {
             return { isLoggedIn: true }

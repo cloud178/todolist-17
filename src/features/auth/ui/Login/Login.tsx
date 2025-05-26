@@ -19,8 +19,9 @@ import { Path } from "@/common/routing"
 import { useEffect } from "react"
 
 export const Login = () => {
+  debugger
   const themeMode = useAppSelector(selectThemeMode)
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  // const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const navigate = useNavigate()
 
@@ -47,9 +48,9 @@ export const Login = () => {
 
   // в случае если мы залогинины, перекинуть приложение нас должно на главную страницу
   //1 способ, дока его рекомендует, а Валера рекомендует, т.к. писать меньше кода, в сравнении со вторым способом
-  if (isLoggedIn) {
-    return <Navigate to={Path.Main} />
-  }
+  // if (isLoggedIn) {
+  //   return <Navigate to={Path.Main} />
+  // }
   // 2 вариант
   // если использовать просто такой вариант без юзэффекта, то будет падать ошибка, в консоли видно,
   // поэтому надо в юзэффекте этот второй способ использовать. Как понимаю это связано с тем что

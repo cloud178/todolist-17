@@ -146,11 +146,16 @@ export const tasksSlice = createAppSlice({
         task.title = action.payload.title
       }
     }),
+    clearTasksAC: create.reducer((state, _) => {
+      Object.keys(state).forEach((key) => {
+        delete state[key]
+      })
+    }),
   }),
 })
 
 export const { selectTasks } = tasksSlice.selectors
-export const { fetchTasksTC, createTaskTC, deleteTaskTC, updateTaskTC } = tasksSlice.actions
+export const { fetchTasksTC, createTaskTC, deleteTaskTC, updateTaskTC, clearTasksAC } = tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
 
 export type TasksState = Record<string, DomainTask[]>
