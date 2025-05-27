@@ -4,6 +4,7 @@ import type { RequestStatus } from "@/common/types"
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from "@/common/utils"
 import { todolistsApi } from "@/features/todolists/api/todolistsApi"
 import { type Todolist, TodolistSchema } from "@/features/todolists/api/todolistsApi.types"
+import { clearDataAC } from "@/common/actions"
 
 export const todolistsSlice = createAppSlice({
   name: "todolists",
@@ -121,10 +122,15 @@ export const todolistsSlice = createAppSlice({
         todolist.entityStatus = action.payload.entityStatus
       }
     }),
-    clearTodolistsAC: create.reducer((state, _) => {
-      state.length = 0
-    }),
+    // clearTodolistsAC: create.reducer((state, _) => {
+    //   return []
+    // }),
   }),
+  extraReducers: (builder) => {
+    builder.addCase(clearDataAC, (_state, _action) => {
+      return []
+    })
+  },
 })
 
 export const { selectTodolists } = todolistsSlice.selectors
@@ -135,7 +141,7 @@ export const {
   changeTodolistTitleTC,
   changeTodolistFilterAC,
   changeTodolistStatusAC,
-  clearTodolistsAC,
+  // clearTodolistsAC,
 } = todolistsSlice.actions
 export const todolistsReducer = todolistsSlice.reducer
 

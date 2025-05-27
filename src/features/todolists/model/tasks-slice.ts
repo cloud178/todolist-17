@@ -5,6 +5,7 @@ import { createAppSlice, handleServerAppError, handleServerNetworkError } from "
 import { tasksApi } from "@/features/todolists/api/tasksApi"
 import { type DomainTask, DomainTaskSchema, type UpdateTaskModel } from "@/features/todolists/api/tasksApi.types"
 import { createTodolistTC, deleteTodolistTC } from "./todolists-slice"
+import { clearDataAC } from "@/common/actions"
 
 export const tasksSlice = createAppSlice({
   name: "tasks",
@@ -19,6 +20,9 @@ export const tasksSlice = createAppSlice({
       })
       .addCase(deleteTodolistTC.fulfilled, (state, action) => {
         delete state[action.payload.id]
+      })
+      .addCase(clearDataAC, (_state, _action) => {
+        return {}
       })
   },
   reducers: (create) => ({
@@ -146,16 +150,23 @@ export const tasksSlice = createAppSlice({
         task.title = action.payload.title
       }
     }),
-    clearTasksAC: create.reducer((state, _) => {
-      Object.keys(state).forEach((key) => {
-        delete state[key]
-      })
-    }),
+    // clearTasksAC: create.reducer((state, _) => {
+    //   Object.keys(state).forEach((key) => {
+    //     delete state[key]
+    //   })
+    //   return {}
+    // }),
   }),
 })
 
 export const { selectTasks } = tasksSlice.selectors
-export const { fetchTasksTC, createTaskTC, deleteTaskTC, updateTaskTC, clearTasksAC } = tasksSlice.actions
+export const {
+  fetchTasksTC,
+  createTaskTC,
+  deleteTaskTC,
+  updateTaskTC,
+  // clearTasksAC
+} = tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
 
 export type TasksState = Record<string, DomainTask[]>
